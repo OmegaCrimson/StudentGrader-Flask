@@ -1,10 +1,18 @@
 # 🎓 Student Grader (Python Flask) — Web App  
 # برنامج تقييم الطلاب (Python Flask) — تطبيق ويب  
 
-[![GitHub release](https://img.shields.io/github/v/release/OmegaCrimson/StudentGrader-Flask)](https://github.com/OmegaCrimson/StudentGrader-Flask/releases)  
-![License](https://img.shields.io/github/license/OmegaCrimson/StudentGrader-Flask)  
-![Python Version](https://img.shields.io/badge/python-3.11-blue)  
-![Downloads](https://img.shields.io/github/downloads/OmegaCrimson/StudentGrader-Flask/total)  
+## 🌐 StudentGrader-Flask Status
+
+[![GitHub release](https://img.shields.io/github/v/release/OmegaCrimson/StudentGrader-Flask)](https://github.com/OmegaCrimson/StudentGrader-Flask/releases)
+![License](https://img.shields.io/github/license/OmegaCrimson/StudentGrader-Flask)
+![Python Version](https://img.shields.io/badge/python-3.11-blue)
+![Downloads](https://img.shields.io/github/downloads/OmegaCrimson/StudentGrader-Flask/total)
+
+![GitHub stars](https://img.shields.io/github/stars/OmegaCrimson/StudentGrader-Flask?style=social)
+![GitHub forks](https://img.shields.io/github/forks/OmegaCrimson/StudentGrader-Flask?style=social)
+![GitHub issues](https://img.shields.io/github/issues/OmegaCrimson/StudentGrader-Flask)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/OmegaCrimson/StudentGrader-Flask)
+![GitHub last commit](https://img.shields.io/github/last-commit/OmegaCrimson/StudentGrader-Flask)
 
 ---
 
