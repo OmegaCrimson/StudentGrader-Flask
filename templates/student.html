@@ -1,0 +1,23 @@
+<h2>{{ student.name }} (Age {{ student.age }})</h2>
+<p>Average Grade: {{ student.averageGrade() }}</p>
+
+<h3>Subjects</h3>
+<ul>
+  {% for subject in student.subjects %}
+    <li>
+      {{ subject.name }} - {{ subject.grade }}/{{ subject.maxGrade }} ({{ subject.teacher }})
+      <a href="{{ url_for('remove_subject', student_id=student_id, subject_index=loop.index0) }}">Remove</a>
+    </li>
+  {% endfor %}
+</ul>
+
+<h3>Add Subject</h3>
+<form method="post" action="{{ url_for('add_subject', student_id=student_id) }}">
+  <input name="name" placeholder="Subject Name">
+  <input name="max_score" placeholder="Max Score">
+  <input name="score" placeholder="Score">
+  <input name="teacher" placeholder="Teacher">
+  <button type="submit">Add</button>
+</form>
+
+<a href="{{ url_for('home') }}">Back to Home</a>

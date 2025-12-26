@@ -1,0 +1,11 @@
+<h1>Student Grader</h1>
+<ul>
+  {% for student in students %}
+    <li>
+      <a href="{{ url_for('student_detail', student_id=loop.index0) }}">
+        {{ student.name }} (Age {{ student.age }}) - Avg: {{ student.averageGrade() }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>
+<a href="{{ url_for('add_student') }}">Add New Student</a>
