@@ -1,3 +1,11 @@
+## [1.0.1](https://github.com/OmegaCrimson/StudentGrader-Flask/compare/v1.0.0...v1.0.1) (2025-12-28)
+
+
+### Bug Fixes
+
+* added " " ([3d32fb9](https://github.com/OmegaCrimson/StudentGrader-Flask/commit/3d32fb94d888252100b20b5f0592a98043cc26f9))
+* man i love fixes ([ffc3e46](https://github.com/OmegaCrimson/StudentGrader-Flask/commit/ffc3e46a88f81d9cd99ad1e4dfcad8db676a71c2))
+
 # 1.0.0 (2025-12-28)
 
 
