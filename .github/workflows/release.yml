@@ -44,7 +44,7 @@ jobs:
         echo "Running semantic-release..."
         semantic-release || echo "semantic-release failed or no release needed."
 
-    - name: Fallback: Create tag if none exists
+    - name: "Fallback: Create tag if none exists"
       run: |
         git fetch --tags
         $TAG = git describe --tags --abbrev=0
