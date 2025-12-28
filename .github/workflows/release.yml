@@ -1,0 +1,96 @@
+name: Manual Versioned Release Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Run without pushing or releasing'
+        required: false
+        default: 'false'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pyinstaller
+
+    - name: Clean previous outputs
+      run: |
+        Remove-Item -Recurse -Force dist, build, *.spec, StudentGrader.zip -ErrorAction SilentlyContinue
+
+    - name: Build Flask executable
+      run: pyinstaller --onefile main.py
+
+    - name: Verify build output
+      run: |
+        if (!(Test-Path "dist/main.exe")) {
+          Write-Host "Build failed: dist/main.exe not found."
+          exit 1
+        }
+        Write-Host "Build succeeded: dist/main.exe found."
+
+    - name: Zip build
+      run: |
+        Compress-Archive -Path dist\* -DestinationPath StudentGrader.zip
+        Write-Host "Zipped build: StudentGrader.zip"
+
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: StudentGrader-Flask-Windows
+        path: dist/
+
+    - name: Install GitHub CLI
+      run: |
+        Invoke-WebRequest -Uri https://github.com/cli/cli/releases/download/v2.45.0/gh_2.45.0_windows_amd64.msi -OutFile gh.msi
+        Start-Process msiexec.exe -Wait -ArgumentList '/i gh.msi /quiet'
+        Remove-Item gh.msi
+
+    - name: Create GitHub Release
+      if: ${{ github.event.inputs.dry_run != 'true' }}
+      run: |
+        Write-Host "Detecting latest Git tag..."
+        $TAG = git describe --tags --abbrev=0
+        if (-not $TAG) {
+          Write-Host "No tag found. Skipping release."
+          exit 0
+        }
+
+        $NOTES_FILE = "CHANGELOG.md"
+        if (-not (Test-Path $NOTES_FILE)) {
+          Write-Host "CHANGELOG.md not found. Creating placeholder."
+          "Initial release." | Out-File $NOTES_FILE
+        }
+
+        Write-Host "Creating release for tag: $TAG"
+        Write-Host "Repository: $env:GITHUB_REPOSITORY"
+        Write-Host "Artifacts: dist/main.exe, StudentGrader.zip"
+
+        if (!(Test-Path "dist/main.exe") -or !(Test-Path "StudentGrader.zip")) {
+          Write-Host "Missing release files. Aborting upload."
+          exit 1
+        }
+
+        gh release create $TAG dist/main.exe StudentGrader.zip `
+          --repo "$env:GITHUB_REPOSITORY" `
+          --title "Student Grader $TAG" `
+          --notes-file $NOTES_FILE `
+          --target main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
