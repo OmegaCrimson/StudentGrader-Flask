@@ -44,7 +44,7 @@ jobs:
         echo "Running semantic-release..."
         semantic-release || echo "semantic-release failed or no release needed."
 
-    - name: "Fallback: Create tag if none exists"
+    - name: Fallback: Create tag if none exists
       run: |
         git fetch --tags
         $TAG = git describe --tags --abbrev=0
@@ -108,11 +108,16 @@ jobs:
           "Initial release." | Out-File $NOTES_FILE
         }
 
-        Write-Host "Creating release for tag: $TAG"
-        gh release create $TAG dist/main.exe StudentGrader.zip `
-          --repo "$env:GITHUB_REPOSITORY" `
-          --title "Student Grader $TAG" `
-          --notes-file $NOTES_FILE `
-          --target main
+        $RELEASE_EXISTS = gh release view $TAG --repo "$env:GITHUB_REPOSITORY" 2>$null
+        if ($LASTEXITCODE -eq 0) {
+          Write-Host "Release for tag $TAG already exists. Skipping release creation."
+        } else {
+          Write-Host "Creating release for tag: $TAG"
+          gh release create $TAG dist/main.exe StudentGrader.zip `
+            --repo "$env:GITHUB_REPOSITORY" `
+            --title "Student Grader $TAG" `
+            --notes-file $NOTES_FILE `
+            --target main
+        }
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
