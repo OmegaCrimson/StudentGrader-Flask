@@ -1,0 +1,10 @@
+{
+  "name": "student-grader-web",
+  "version": "1.0.0",
+  "description": "A Python Web server to manage students and subjects",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OmegaCrimson/StudentGrader-Flask.git"
+  },
+  "license": "MIT"
+}
