@@ -94,3 +94,9 @@ jobs:
           --target main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Debug Repository Context
+      run: |
+        echo "Repository: $env:GITHUB_REPOSITORY"
+        echo "Actor: $env:GITHUB_ACTOR"
+        echo "Ref: $env:GITHUB_REF"
