@@ -1,10 +1,36 @@
 {
   "name": "student-grader-web",
   "version": "1.0.0",
-  "description": "A Python Web server to manage students and subjects",
+  "description": "A Flask-based web app to manage students and subjects",
   "repository": {
     "type": "git",
     "url": "https://github.com/OmegaCrimson/StudentGrader-Flask.git"
   },
-  "license": "MIT"
+  "author": "Mohamed Gonem",
+  "license": "MIT",
+  "private": true,
+  "release": {
+    "branches": ["main"],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/github",
+      [
+        "@semantic-release/git",
+        {
+          "assets": ["CHANGELOG.md", "package.json"],
+          "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ]
+    ]
+  },
+  "devDependencies": {
+    "semantic-release": "^23.0.0",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^9.0.6",
+    "@semantic-release/commit-analyzer": "^11.0.0",
+    "@semantic-release/release-notes-generator": "^12.0.0"
+  }
 }
